@@ -99,17 +99,17 @@ const Mint = () => {
                     headers: { Authorization: `Bearer ${token}` }
                 }
             );
-        }
-        const { success, message } = data;
-        if (success) {
-            toast(`You successfully minted your display picture as a compressed NFT`, {
-                position: "top-right",
-            })
-            setMinted(1)
-        } else {
-            toast.error(`Mint failed`, {
-                position: "top-right",
-            })
+            const { success, message } = data;
+            if (success) {
+                toast(`You successfully minted your display picture as a compressed NFT`, {
+                    position: "top-right",
+                })
+                setMinted(1)
+            } else {
+                toast.error(`Mint failed`, {
+                    position: "top-right",
+                })
+            }
         }
     }
 
