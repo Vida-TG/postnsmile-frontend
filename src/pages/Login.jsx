@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
+import { useCookies } from "react-cookie";
 
 const Login = () => {
   const navigate = useNavigate();
+  const [cookies, removeCookie] = useCookies([]);
   const [inputValue, setInputValue] = useState({
     email: "",
     password: "",
@@ -37,7 +39,7 @@ const Login = () => {
         },
         { withCredentials: true }
       );
-      console.log(data);
+      console.log(cookies);
       const { success, message } = data;
       if (success) {
         handleSuccess(message);

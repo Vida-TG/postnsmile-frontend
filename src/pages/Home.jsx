@@ -60,6 +60,7 @@ const Home = () => {
 
     useEffect(() => {
         const verifyCookie = async () => {
+        console.log(cookies)
         if (!cookies.token) {
             navigate("/login");
         }
