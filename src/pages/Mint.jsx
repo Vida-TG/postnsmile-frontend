@@ -92,7 +92,9 @@ const Mint = () => {
         const { data } = await axios.post(
             "https://postns.onrender.com/api/upload-image",
             { imageUrl: tempImgUrl },
-            { withCredentials: true }
+            { 
+                headers: { Authorization: `Bearer ${token}` }
+            }
         );
         console.log(data)
         const { success, message } = data;

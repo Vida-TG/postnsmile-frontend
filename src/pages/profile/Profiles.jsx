@@ -5,11 +5,9 @@ import './profile.css';
 import Header from './Header';
 import PostBox from './PostBox';
 import UserCard from './UserCard';
-import { useCookies } from 'react-cookie';
 import logo from "../../assets/logo.png"
 
 const Profile = () => {
-  const [cookies, removeCookie] = useCookies([]);
     const [ details, setDetails ] = useState({})
     const [ users, setUsers ] = useState([])
     
@@ -21,12 +19,12 @@ const Profile = () => {
     }
 
     const logout = () => {
-      removeCookie("token");
+      localStorage.removeItem('token');
       navigate("/signup");
     };
 
     useEffect(() => {
-      axios.get('https://postns.onrender.com/api/user', { withCredentials: true })
+      axios.get('https://postns.onrender.com/api/user', { headers: {Authorization: `Bearer ${token}` }})
       .then((response) => {
           setDetails(response.data);
       })

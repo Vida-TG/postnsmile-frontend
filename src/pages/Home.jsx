@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import * as web3 from '@solana/web3.js';
@@ -12,7 +11,6 @@ import { saveWallet, encryptKeypair } from '../helperFunctions';
 
 const Home = () => {
     const navigate = useNavigate();
-    const [cookies, removeCookie] = useCookies([]);
     const [username, setUsername] = useState("");
     const [keypair, setKeypair] = useState(null);
     const [copied, setCopied] = useState(false)
@@ -59,29 +57,36 @@ const Home = () => {
 
 
     useEffect(() => {
-        const verifyCookie = async () => {
-        console.log(cookies)
-        if (!cookies.token) {
-            navigate("/login");
-        }
-        const { data } = await axios.post(
-            "https://postns.onrender.com/api",
-            {},
-            { withCredentials: true }
-        );
-        const { status, user } = data;
-        setUsername(user);
-        return status
-            ? toast(`Hello ${user}`, {
-                position: "top-right",
-            })
-            : (removeCookie("token"), navigate("/login"));
+        const checkAuthentication = async () => {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                navigate("/login");
+            } else {
+                console.log(token)
+                const { data } = await axios.post(
+                    "https://postns.onrender.com/api",
+                    {},
+                    { 
+                        headers: { Authorization: `Bearer ${token}` }
+                    }
+                );
+                const { status, user } = data;
+                setUsername(user);
+                return status
+                    ? (toast(`Hello ${user}`, {
+                        position: "top-right",
+                    }))
+                    :
+                    navigate("/login");
+            }
         };
-        verifyCookie();
-    }, [cookies, navigate, removeCookie]);
+
+        checkAuthentication()
+    
+    }, [navigate]);
 
     const Logout = () => {
-        removeCookie("token");
+        localStorage.removeItem('token');
         navigate("/signup");
     };
 

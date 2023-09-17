@@ -38,9 +38,10 @@ const Signup = () => {
         },
         { withCredentials: true }
       );
-      const { success, message } = data;
+      const { success, message, token } = data;
       if (success) {
         handleSuccess(message);
+        localStorage.setItem('token', token);
         setTimeout(() => {
           navigate("/");
         }, 1000);
