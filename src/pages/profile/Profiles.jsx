@@ -24,13 +24,18 @@ const Profile = () => {
     };
 
     useEffect(() => {
-      axios.get('https://postns.onrender.com/api/user', { headers: {Authorization: `Bearer ${token}` }})
-      .then((response) => {
-          setDetails(response.data);
-      })
-      .catch((error) => {
-          console.error('Error fetching details:', error);
-      });
+      const token = localStorage.getItem('token');
+      if (!token) {
+        navigate("/login");
+      } else {
+        axios.get('https://postns.onrender.com/api/user', { headers: {Authorization: `Bearer ${token}` }})
+        .then((response) => {
+            setDetails(response.data);
+        })
+        .catch((error) => {
+            console.error('Error fetching details:', error);
+        });
+      }
 
       axios.get('https://postns.onrender.com/api/user/all-users')
       .then((response) => {

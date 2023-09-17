@@ -88,15 +88,18 @@ const Mint = () => {
         )
         setSuccessSignature(transactionDetails.transaction.signatures[0])
 
-        console.log(tempImgUrl)
-        const { data } = await axios.post(
-            "https://postns.onrender.com/api/upload-image",
-            { imageUrl: tempImgUrl },
-            { 
-                headers: { Authorization: `Bearer ${token}` }
-            }
-        );
-        console.log(data)
+        const token = localStorage.getItem('token');
+        if (!token) {
+            navigate("/login");
+        } else {
+            const { data } = await axios.post(
+                "https://postns.onrender.com/api/upload-image",
+                { imageUrl: tempImgUrl },
+                { 
+                    headers: { Authorization: `Bearer ${token}` }
+                }
+            );
+        }
         const { success, message } = data;
         if (success) {
             toast(`You successfully minted your display picture as a compressed NFT`, {
