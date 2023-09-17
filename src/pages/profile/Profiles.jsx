@@ -26,7 +26,7 @@ const Profile = () => {
     };
 
     useEffect(() => {
-      axios.get('http://localhost:4000/api/user', { withCredentials: true })
+      axios.get('https://postns.onrender.com/api/user', { withCredentials: true })
       .then((response) => {
           setDetails(response.data);
       })
@@ -34,7 +34,7 @@ const Profile = () => {
           console.error('Error fetching details:', error);
       });
 
-      axios.get('http://localhost:4000/api/user/all-users')
+      axios.get('https://postns.onrender.com/api/user/all-users')
       .then((response) => {
           console.log(response.data)
           setUsers(response.data);

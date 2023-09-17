@@ -90,7 +90,7 @@ const Mint = () => {
 
         console.log(tempImgUrl)
         const { data } = await axios.post(
-            "http://localhost:4000/api/upload-image",
+            "https://postns.onrender.com/api/upload-image",
             { imageUrl: tempImgUrl },
             { withCredentials: true }
         );
@@ -109,7 +109,7 @@ const Mint = () => {
     }
 
     useEffect(() => {
-        axios.get('http://localhost:4000/api/count')
+        axios.get('https://postns.onrender.com/api/count')
         .then((response) => {
             setElementCount(response.data.elementCount);
         })

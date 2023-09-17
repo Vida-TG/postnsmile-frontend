@@ -64,7 +64,7 @@ const Home = () => {
             navigate("/login");
         }
         const { data } = await axios.post(
-            "http://localhost:4000/api",
+            "https://postns.onrender.com/api",
             {},
             { withCredentials: true }
         );

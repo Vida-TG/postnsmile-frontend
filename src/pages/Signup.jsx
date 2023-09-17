@@ -32,7 +32,7 @@ const Signup = () => {
     try {
         console.log(inputValue)
       const { data } = await axios.post(
-        "http://localhost:4000/api/signup",
+        "https://postns.onrender.com/api/signup",
         {
           ...inputValue,
         },
